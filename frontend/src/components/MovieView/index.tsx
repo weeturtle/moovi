@@ -1,5 +1,6 @@
 import { Suspense } from "react";
-import DetailView from "./DetailView";
+import DetailView, { RawDetails } from "./DetailView";
+import { useTMDBDataFetch } from "../../util/tmdbDataFetch";
 
 interface MovieViewProps {
   id: number;
@@ -8,13 +9,17 @@ interface MovieViewProps {
 }
 
 const MovieView = ({ id, title, release_date }: MovieViewProps) => {
+  const detailPromise = useTMDBDataFetch<RawDetails>(
+    `https://api.themoviedb.org/3/movie/${id}`,
+  );
+
   return (
     <div>
       <h3>{title}</h3>
       <p>{release_date}</p>
 
       <Suspense fallback={<p>Loading...</p>}>
-        <DetailView id={id} />
+        <DetailView detailPromise={detailPromise} />
       </Suspense>
     </div>
   );
