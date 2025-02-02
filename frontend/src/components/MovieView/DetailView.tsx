@@ -5,6 +5,8 @@ interface DetailViewProps {
 }
 
 export interface RawDetails {
+  title: string;
+  release_date: string;
   overview: string;
   vote_average: number;
   poster_path: string;
@@ -16,6 +18,8 @@ const DetailView = ({ detailPromise }: DetailViewProps) => {
 
   return (
     <>
+      <h2>{data.title}</h2>
+      <p>Release Date: {data.release_date}</p>
       <img
         src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
         alt="movie poster"
