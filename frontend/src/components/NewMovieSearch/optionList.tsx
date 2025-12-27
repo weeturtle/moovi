@@ -1,29 +1,29 @@
-import { SearchResult } from "../../interfaces/search.interfaces";
+import { TMDB_Movie_Response } from "../../interfaces/movie.interfaces";
 import "./index.scss";
 
 interface OptionListProps {
-  options: SearchResult[];
-  handleOptionSelect: (id: number) => void;
+  options: TMDB_Movie_Response[];
+  handleOptionSelect: (movie: TMDB_Movie_Response) => void;
 }
 
 const OptionList = ({ options, handleOptionSelect }: OptionListProps) => {
   return (
     <ul className="SearchListContainer">
-      {options.map(({ id, poster_path, title, year }) => {
+      {options.map((movie) => {
         return (
           <li
             className="SearchListOption"
-            key={id}
-            onClick={() => handleOptionSelect(id)}
+            key={movie.id}
+            onClick={() => handleOptionSelect(movie)}
           >
             <img
               className="SearchListOptionImage"
-              src={poster_path}
+              src={movie.poster_path}
               alt="movie poster"
               loading="lazy"
             />
-            <p className="SearchListOptionTitle">{title}</p>
-            <p className="SearchListOptionYear">({year})</p>
+            <p className="SearchListOptionTitle">{movie.title}</p>
+            <p className="SearchListOptionYear">({movie.release_date})</p>
           </li>
         );
       })}

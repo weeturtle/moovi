@@ -1,11 +1,8 @@
-import {
-  SearchResult,
-  TMDB_Search_Response,
-} from "../../interfaces/search.interfaces";
+import { TMDB_Movie_Response } from "../../interfaces/movie.interfaces";
 
 export const handleSearch = async (
   curSearch: string,
-): Promise<SearchResult[]> => {
+): Promise<TMDB_Movie_Response[]> => {
   const raw_response = await fetch(
     `https://api.themoviedb.org/3/search/movie?query=${curSearch}`,
     {
@@ -15,12 +12,6 @@ export const handleSearch = async (
       },
     },
   );
-  const response: TMDB_Search_Response = await raw_response.json();
 
-  return response.results.map((result) => ({
-    id: result.id,
-    title: result.title,
-    year: result.release_date.split("-")[0],
-    poster_path: `https://image.tmdb.org/t/p/w500${result.poster_path}`,
-  }));
+  return raw_response.json();
 };
